@@ -1,0 +1,21 @@
+name: medqa_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - jupyterlab
+  - jupyterlab-lsp
+  - python-lsp-server
+  - pip
+  - tqdm
+  - ipywidgets
+  - pre-commit
+  - numpy
+  - pandas
+  - lxml
+  - nltk
+  - rouge-score
+  - pip:
+      - gradio
+      - gat_llm
+      - markitdown[all]
