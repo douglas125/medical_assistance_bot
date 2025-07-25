@@ -27,14 +27,14 @@ These samples demonstrate that LLM based models have more flexibility to handle 
 In order to expedite the development of the solution and obtain high-quality results, a pre-trained LLM model was used. The LLM model qwen3:1.7b was chosen because it provides good compromise considering runtime, time allowed for developing the solution and quality of responses.
 
 The first model is a zero-shot approach without using any training data with the LLM.
-The second model uses GloVe Embeddings to compute the similarity of the user query with the questions in the training set. This approach tends to give much worse results, but it is also significantly faster.
+The second model uses GloVe Embeddings to compute the similarity of the user query with the questions in the training set. This approach tends to give less flexible results, but it is also significantly faster.
 The third approach combines QA pairs retrieved using GloVe embeddings and uses them as extra context for the LLM. If reference QA pairs are found, they should improve the quality of the responses.
 
 ## Evaluation
 
 BLEU and Rouge metrics are used to evaluate the models. These are widely used metrics that capture precision and recall using text similarity strategies.
 
-Modern LLMs introduce the possibility of using LLM judges. The code to use a LLM as judge has been implemented. However, due to time constraints (the LLM judge takes many hours to run in this dataset), its results were not used. Please disconsider the LLM judge metrics (marked with N/A).
+Modern LLMs introduce the possibility of using LLM judges. The code to use a LLM as judge has been implemented in this repository. However, due to time constraints (the LLM judge takes many hours to run in this dataset), its results were not used. Please disconsider the LLM judge metrics (marked with N/A).
 
 The approach presented in https://moonshotai.github.io/Kimi-K2/ was adapted to create a more reliable evaluation based on:
 ```
@@ -60,7 +60,7 @@ However, in this particular case, medical data may be sensitive and there may be
 
 The following approaches were used:
 
-- Data-retrieval using GloVe: the training set is explicitly used as a knowledge base using GloVe embeddings on the questions
+- Data-retrieval using GloVe: the training set is explicitly used as a knowledge base using GloVe embeddings on the questions (to compare user questions with available QA pairs in the training set)
 - Zero-shot LLM: the base LLM is used without any extra instruction
 - LLM with data-retrieval: the base LLM receives QA pairs suggested by GloVe to inform its answer decision (only using questions from the training set)
 
@@ -70,6 +70,7 @@ Data-retrieval using GloVe:
 - Pros:
     - Very fast inference
     - Results are reliable since they are verbatim copies of a curated set
+    - Best overall scores (BLEU and rouge)
 - Cons:
     - Not conversational (only answers one isolated question at a time)
     - Cannot adapt to the user question. E.g. (compare condition X with condition Y)
@@ -132,10 +133,11 @@ Further improvements to speed and model specialization could be obtained by:
 - the GloVe embeddings approach acts as a primitive RAG. To boost runtime and performance, it would be better to use more advanced vector databases and embedding models
 - use GloVe embeddings of higher dimension than 50
 - training a custom model using Tensorflow or PyTorch. This was not feasible due to time and processing constraints
+- using better metrics (e.g. LLM judge) and out-of-distribution questions to better assess the quality of the answers
 
 ## Responsible AI
 
-[ ] TODO: Inform users that the AI answer does not dispense with medical advice.
+In a real use case, it is very important to inform users that the AI answer does not dispense with medical advice and is not meant to replace doctors.
 
 
 ## Summary of premises
