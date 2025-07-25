@@ -19,7 +19,7 @@ conda activate medqa_env
 python medical_assistant.py
 ```
 
-Sample interactionf can be found in the [interaction log file](log.md).
+Sample interactions can be found in the [interaction log file](log.md).
 These samples demonstrate that LLM based models have more flexibility to handle out-of-distribution questions while the search-based model (using GloVe to retrieve relevant QA pairs) works better when the structure of the questions is more similar to what is presented in the base data set.
 
 # Solution Approach
